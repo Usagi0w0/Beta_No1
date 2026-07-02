@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+            "@pixiv/three-vrm": "https://unpkg.com/@pixiv/three-vrm@2.0.0/lib/three-vrm.module.js"
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="pantalla-inicio">
+        <h1>Juego Avatar</h1>
+        <button id="btn-inicio">Comenzar Juego</button>
+    </div>
+
+    <div id="interfaz-juego" style="display: none;">
+        <button id="btn-pelea">Pelear</button>
+    </div>
+
+    <div id="contenedor-vroid"></div>
+
+    <script src="script.js"></script>
+    <script>
+    console.log("El index.html está leyendo este script");
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("El DOM está listo");
+        const btn = document.getElementById("btn-inicio");
+        if (btn) {
+            console.log("El botón existe");
+            btn.addEventListener("click", () => {
+                alert("¡El botón funciona!");
+            });
+        } else {
+            console.log("El botón no existe");
+        }
+    });
+</script>
+</body>
+</html>
