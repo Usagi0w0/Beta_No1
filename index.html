@@ -2,44 +2,59 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-            "@pixiv/three-vrm": "https://unpkg.com/@pixiv/three-vrm@2.0.0/lib/three-vrm.module.js"
-        }
-    }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test VRoid</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="pantalla-inicio">
-        <h1>Juego Avatar</h1>
-        <button id="btn-inicio">Comenzar Juego</button>
-    </div>
+    <!-- Multiversal Start Menu -->
+    <div id="inicioMenu" class="holo-screen">
+        <!-- Capa de efecto holográfico (líneas de escaneo) -->
+        <div class="holo-overlay"></div>
 
-    <div id="interfaz-juego" style="display: none;">
-        <button id="btn-pelea">Pelear</button>
-    </div>
+        <div id="terminal-multiversal">
+            <!-- Lienzo donde se dibujarán las 8 variables del caos (DEJAMOS SOLO UNO) -->
+            <canvas id="caos-canvas"></canvas>
 
-    <div id="contenedor-vroid"></div>
+            <!-- Panel Izquierdo: Opciones del Sistema -->
+            <div class="menu-izquierdo">
+                <!-- Nota que el ID aquí es "btnEmpezar" -->
+                <button id="btnEmpezar" class="holo-btn">INICIAR VIAJE</button>
+                <button class="holo-btn disabled">BONOS</button>
+                <button class="holo-btn disabled">RECONOCIMIENTOS</button>
+                <button class="holo-btn disabled">QUE VES?</button>
+            </div>
 
-    <script src="script.js"></script>
-    <script>
-    console.log("El index.html está leyendo este script");
-    document.addEventListener("DOMContentLoaded", () => {
-        console.log("El DOM está listo");
-        const btn = document.getElementById("btn-inicio");
-        if (btn) {
-            console.log("El botón existe");
-            btn.addEventListener("click", () => {
-                alert("¡El botón funciona!");
-            });
-        } else {
-            console.log("El botón no existe");
+            <!-- Panel Derecho: Contenedor Hexagonal de la Mascota -->
+            <!-- Le puse el ID "mascota-container" para que lo detecte la animación CSS -->
+            <div id="mascota-container" class="contenedor-mascota">
+                <div class="hexagono-mascota">
+                    <!-- Texto temporal hasta que pongamos el modelo 3D -->
+                    <p class="mascota-placeholder">SISTEMA<br>EN ESPERA</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ¡Esta es la etiqueta de cierre que faltaba para inicioMenu! -->
+
+    <!-- === ZONA APAGADA TEMPORALMENTE === -->
+    <!-- Comentamos el canvas de prueba para que la chica 3D gigante no estorbe en el menú -->
+    <!-- <canvas id="vroidCanvas"></canvas> -->
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/",
+          "@pixiv/three-vrm": "https://unpkg.com/@pixiv/three-vrm@2.0.0/lib/three-vrm.module.js"
         }
-    });
-</script>
+      }
+    </script>
+    
+    <!-- Apagamos la carga automática de tu script.js del modelo 3D de prueba -->
+    <!-- <script type="module" src="script.js"></script> -->
+    <!-- ================================== -->
+
+    <!-- Asegúrate de tener aquí la llamada al JavaScript del menú que te pasé -->
+    <!-- <script src="tu-archivo-del-menu.js"></script> -->
 </body>
 </html>
