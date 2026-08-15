@@ -1,126 +1,198 @@
-/* 🎨 ESTILOS GENERALES Y CONFIGURACIÓN DE PÁGINA */
-* {
-    box-sizing: border-box;
+/* Base Reset */
+body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body, html {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Evita barras de navegación molestas durante el testeo */
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #333333; 
 }
 
-/* 🏛️ ESTILO DEL MENÚ DE INICIO (Fondo Gris) */
-#menu-inicio {
+#vroidCanvas {
+    display: block;
     width: 100%;
     height: 100%;
-    background-color: #4a4a4a; /* Gris neutral para el menú */
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
 }
 
-#menu-inicio h1 {
-    font-size: 2.5rem;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
-button {
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    color: #333;
-    transition: background 0.2s;
-}
-
-/* 3D Avatar Container (Background) */
-#contenedor-vroid {
+/* Pantalla Holográfica Principal */
+.holo-screen {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1; 
+    width: 100%;
+    height: 100%;
+    background-color: #181818 !important; 
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.923' viewBox='0 0 60 103.923' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.923L0 86.6025V51.9615L30 34.641L60 51.9615V86.6025L30 103.923ZM30 101.614L58 85.447V53.116L30 36.949L2 53.116V85.447L30 101.614ZM30 51.9615L0 34.641V0L30 -17.3205L60 0V34.641L30 51.9615ZM30 49.652L58 33.486V1.155L30 -15.012L2 1.155V33.486L30 49.652Z' fill='%2300ffff' fill-opacity='0.45'/%3E%3C/svg%3E");
+    z-index: 10;
     overflow: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
-/* Interfaz de Juego (Frente) */
-#interfaz-juego {
-    position: absolute; /* Para que flote sobre el 3D */
+#inicioMenu.oculto {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Efecto holográfico (Líneas de escaneo) */
+.holo-overlay {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 2; 
-    display: none; /* Se oculta al inicio */
-    pointer-events: none; /* TRUCO: Deja pasar los clics hacia el 3D */
-    /* Aquí van tus estilos de flexbox para centrar las cosas */
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    background: linear-gradient(rgba(0, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.4) 50%);
+    background-size: 100% 4px;
+    pointer-events: none; 
+    z-index: 11;
+    animation: holoFlicker 5s infinite;
 }
 
-/* Botón de Pelea / Clicker */
-.btn-pelea {
-    pointer-events: auto; /* Reactivamos los clics SOLO para el botón */
-    /* Tus colores y márgenes aquí */
+@keyframes holoFlicker {
+    0% { opacity: 0.9; }
+    5% { opacity: 0.8; }
+    10% { opacity: 1; }
+    15% { opacity: 0.7; }
+    100% { opacity: 0.9; }
 }
 
-button:hover {
-    background-color: #b5b5b5; /* Efecto visual al pasar el cursor */
-}
-
-/* 🧪 ESTILO DE LA ZONA DE TESTEO (Fondo Óptimo para 3D) */
-#zona-juego {
+/* Contenedor Terminal */
+#terminal-multiversal {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: #2c3e50; /* Azul grisáceo óptimo para renderizar el modelo 3D */
-    color: white;
+    z-index: 12;
+    pointer-events: none; 
+}
+
+#terminal-multiversal > * {
+    pointer-events: auto; /* Reactiva los clics en los menús y botones */
+}
+
+/* Panel de botones izquierdo (Desplazado a la izquierda según tu esquema) */
+.menu-izquierdo {
+    position: absolute;
+    top: 50%;
+    left: 8%; /* Ajusta este porcentaje si deseas moverlo más hacia el borde */
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 300px;
+    z-index: 12;
+}
+
+/* Estructura de los botones tecnológicos */
+.holo-btn {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: 18px 30px;
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1), inset 0 0 10px rgba(0, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+
+.holo-btn:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.4);
+    text-shadow: 3px 0px 5px rgba(0, 255, 255, 0.8), -3px 0px 5px rgba(255, 0, 255, 0.6);
+    transform: translateX(15px); 
+}
+
+.holo-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.holo-btn.disabled:hover {
+    transform: none;
+    text-shadow: none;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Contenedor y Hexágono de la Mascota (Derecha, al lado del menú) */
+#mascota-container {
+    position: absolute;
+    top: 50%;
+    right: 12%; /* Posicionado a la derecha de forma armónica */
+    transform: translateY(-50%);
+    width: 320px;
+    height: 360px;
+    z-index: 12;
+    transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ESTADO DE VIAJE ACTIVO: Vuela a la esquina superior derecha y se reduce */
+body.viaje-activo #mascota-container {
+    top: 20px;
+    right: 20px;
+    transform: none;
+    width: 150px;
+    height: 200px;
+}
+
+.hexagono-mascota {
+    width: 100%;
+    height: 100%;
+    background: #090d16; 
+    border: 3px solid #00ffff;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 
-/* Espacio donde va a vivir tu modelo de VRoid */
-#contenedor-vroid {
-    width: 100%;
-    height: 100%;
+.hexagono-mascota::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.3);
+    z-index: -1;
+}
+
+.mascota-placeholder {
+    color: #00ffff;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    animation: pulseText 2s infinite;
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Lienzo de la mariposa / caos */
+#caos-canvas {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* Queda detrás de los botones */
+    width: 100%;
+    height: 100%;
+    pointer-events: none; 
+    z-index: 5;
 }
 
-/* Controles del clicker flotando sobre el personaje */
-#interfaz-clicker {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2; /* Queda por encima del render 3D */
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente para leer bien */
-    padding: 20px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+body.viaje-activo #caos-canvas {
+    pointer-events: auto;
 }
 
-#interfaz-clicker h2, #interfaz-clicker p {
-    margin-bottom: 10px;
-}
-
-#btn-clicker {
-    background-color: #e74c3c; /* Botón rojo de pelea para testeo */
-    color: white;
-}
-#btn-clicker:hover {
-    background-color: #c0392b;
+/* Ocultar el menú lateral suavemente cuando inicia el viaje */
+body.viaje-activo .menu-izquierdo {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
